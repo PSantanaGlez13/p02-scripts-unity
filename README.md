@@ -92,7 +92,7 @@ public class Ejercicio3 : MonoBehaviour
 ![Ej 4](media/P02-Ejercicio4.gif)
 
 Este script devuelve la posición del objeto que lo ejecute.
-```
+```c#
 public class Ejercicio4 : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -113,7 +113,7 @@ public class Ejercicio4 : MonoBehaviour
 ![Ej 5](media/P02-Ejercicio5.gif)
 
 Se buscan los `GameObject` con  `GameObject.FindWithTag` y luego se calcula la distancia con el método apropiado de la clase `Vector3`, accediendo a la componente `Transform` de cada objeto.
-```
+```c#
 public class Ejercicio5 : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -137,7 +137,7 @@ public class Ejercicio5 : MonoBehaviour
 ![Ej 6](media/P02-Ejercicio6.gif)
 
 Haciendo uso de `GetKeyDown`, se detecta cuando se pulsa la barra espaciadora. También se definen unas vectores para el desplazamiento de los objetos, el cual se producirá al pulsar la barra espaciadora (sumando estos vectores a las componentes `Transform` de cada objeto). Este script se aplica un objeto invisible de la escena.
-```
+```c#
 public class Ejercicio6 : MonoBehaviour
 {
     public Vector3 desplazamientoPosicionCubo, desplazamientoPosicionCilindro, desplazamientoPosicionEsfera; 
@@ -166,7 +166,7 @@ public class Ejercicio6 : MonoBehaviour
 ![Ej 7](media/P02-Ejercicio7.gif)
 
 La generación de colores aleatorios se ha hecho diferente que en el ejercicio 1, utilizando una función de la clase `Random` que genera un color aleatorio. Por otro lado, se vuelve a hacer uso de `GetKeyDown` para detectar entradas pero esta vez se deja como una propiedad pública, de manera que se pueda aplicar a cada objeto y ajustar el botón al que se desee de manera modular.
-```
+```c#
 public class Ejercicio7 : MonoBehaviour
 {
     public KeyCode botonCambioDeColor = KeyCode.None;
@@ -189,7 +189,7 @@ public class Ejercicio7 : MonoBehaviour
 ![Ej 8](media/P02-Ejercicio8.gif)
 
 Este script está aplicado sobre un objeto vacío que tiene como hijos las esferas que se añaden para este ejercicio. Se ha elegido esta manera de trabajar para poder buscar el script más rápidamente a la hora de desactivarlo. En cuanto al funcionamiento del script, se recogen los `GameObject` de cada esfera de tipo 2 y el cubo. Al pulsar el espacio, se calculan las distancias entre todos las esferas de tipo 2 y el cubo. Se mantiene información acerca de la esfera más cercana y lejana. Finalmente, se ajusta la altura de la esfera más cercana y el color de la más lejana. El color se genera con `Random.ColorHSV` y la altura se puede ajustar mediante una propiedad `AUMENTO_ALTURA`.
-```
+```c#
 public class Ejercicio8 : MonoBehaviour
 {
     public uint AUMENTO_ALTURA = 1;
