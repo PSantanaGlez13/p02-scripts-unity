@@ -6,7 +6,7 @@
 ![Ej 2](media/P02-Ejercicio2.gif)
 
 ## Ejercicio 3.
-![Ej 3](media/P02-Ejercicio3.gif)
+![Ej 3](media/P02-Ejercicio3-v2.gif)
 
 ## Ejercicio 4.
 ![Ej 4](media/P02-Ejercicio4.gif)
