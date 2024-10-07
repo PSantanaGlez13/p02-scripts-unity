@@ -136,7 +136,7 @@ public class Ejercicio5 : MonoBehaviour
 ## Ejercicio 6.
 ![Ej 6](media/P02-Ejercicio6.gif)
 
-Haciendo uso de GetKeyDown
+Haciendo uso de `GetKeyDown`, se detecta cuando se pulsa la barra espaciadora. También se definen unas vectores para el desplazamiento de los objetos, el cual se producirá al pulsar la barra espaciadora (sumando estos vectores a las componentes `Transform` de cada objeto). Este script se aplica un objeto invisible de la escena.
 ```
 public class Ejercicio6 : MonoBehaviour
 {
@@ -145,7 +145,6 @@ public class Ejercicio6 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Posiciones relativas
         desplazamientoPosicionCilindro = new Vector3(-4f, 0f, 0f);
         desplazamientoPosicionEsfera = new Vector3(4f, 0f, 0f);
         desplazamientoPosicionCubo = new Vector3(0f, 1f, 0f);  
@@ -155,7 +154,6 @@ public class Ejercicio6 : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            // Posiciones relativas
             GameObject.FindWithTag("cilindro").GetComponent<Transform>().position += desplazamientoPosicionCilindro;
             GameObject.FindWithTag("cubo").GetComponent<Transform>().position += desplazamientoPosicionCubo;
             GameObject.FindWithTag("esfera").GetComponent<Transform>().position += desplazamientoPosicionEsfera;
@@ -167,5 +165,72 @@ public class Ejercicio6 : MonoBehaviour
 ## Ejercicio 7.
 ![Ej 7](media/P02-Ejercicio7.gif)
 
+La generación de colores aleatorios se ha hecho diferente que en el ejercicio 1, utilizando una función de la clase `Random` que genera un color aleatorio. Por otro lado, se vuelve a hacer uso de `GetKeyDown` para detectar entradas pero esta vez se deja como una propiedad pública, de manera que se pueda aplicar a cada objeto y ajustar el botón al que se desee de manera modular.
+```
+public class Ejercicio7 : MonoBehaviour
+{
+    public KeyCode botonCambioDeColor = KeyCode.None;
+    // Start is called before the first frame update
+    void Start()
+    {   
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(botonCambioDeColor)) {
+            gameObject.GetComponent<Renderer>().material.color = Random.ColorHSV();
+        }
+    }
+}
+```
+
 ## Ejercicio 8.
 ![Ej 8](media/P02-Ejercicio8.gif)
+
+Este script está aplicado sobre un objeto vacío que tiene como hijos las esferas que se añaden para este ejercicio. Se ha elegido esta manera de trabajar para poder buscar el script más rápidamente a la hora de desactivarlo. En cuanto al funcionamiento del script, se recogen los `GameObject` de cada esfera de tipo 2 y el cubo. Al pulsar el espacio, se calculan las distancias entre todos las esferas de tipo 2 y el cubo. Se mantiene información acerca de la esfera más cercana y lejana. Finalmente, se ajusta la altura de la esfera más cercana y el color de la más lejana. El color se genera con `Random.ColorHSV` y la altura se puede ajustar mediante una propiedad `AUMENTO_ALTURA`.
+```
+public class Ejercicio8 : MonoBehaviour
+{
+    public uint AUMENTO_ALTURA = 1;
+    private GameObject cubo;
+    private GameObject[] objetos;
+    // Start is called before the first frame update
+    void Start()
+    {
+        cubo = GameObject.FindWithTag("cubo");
+        objetos = GameObject.FindGameObjectsWithTag("tipo2");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            int indice_mayor_distancia = 0;
+            float mayor_distancia = float.NegativeInfinity;
+            int indice_menor_distancia = 0;
+            float menor_distancia = float.PositiveInfinity;
+            // Búsqueda de las esferas más cercana y más lejana.
+            for (int indice_actual = 0; indice_actual < objetos.Length; ++indice_actual) {
+                float distancia_actual = Vector3.Distance(cubo.transform.position, objetos[indice_actual].transform.position);
+                if (mayor_distancia < distancia_actual) {
+                    indice_mayor_distancia = indice_actual;
+                    mayor_distancia = distancia_actual;
+                }
+                if (menor_distancia > distancia_actual) {
+                    indice_menor_distancia = indice_actual;
+                    menor_distancia = distancia_actual;
+                }
+            }
+            // Ajuste de altura.
+            Vector3 nuevaAltura = objetos[indice_menor_distancia].GetComponent<Transform>().position;
+            nuevaAltura.y += AUMENTO_ALTURA;
+            objetos[indice_menor_distancia].GetComponent<Transform>().position = nuevaAltura;
+
+            // Cambio de color.
+            Color nuevoColor = Random.ColorHSV();
+            objetos[indice_mayor_distancia].GetComponent<Renderer>().material.color = nuevoColor;
+        }
+    }
+}
+```
